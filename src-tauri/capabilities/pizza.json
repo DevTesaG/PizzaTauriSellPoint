@@ -1,0 +1,18 @@
+{
+    "$schema": "../gen/schemas/desktop-schema.json",
+    "identifier": "pizza",
+    "description": "Permissions for pizza_pos plugin",
+    "windows": ["main"],
+    "permissions": [
+      "core:default",
+        "pizza:allow-create-product",
+        "pizza:allow-get-products",
+        "pizza:allow-update-product",
+        "pizza:allow-delete-product",
+        "pizza:allow-get-orders",
+        "pizza:allow-create-order",
+        "pizza:allow-get-coupons",
+        "pizza:allow-create-coupon",
+        "pizza:allow-print-receipt"
+    ]
+  }

@@ -5,15 +5,6 @@
   "windows": ["main"],
   "permissions": [
     "core:default",
-    "opener:default",
-    "pizza:allow-create-product",
-    "pizza:allow-get-products",
-    "pizza:allow-update-product",
-    "pizza:allow-delete-product",
-    "pizza:allow-get-orders",
-    "pizza:allow-create-order",
-    "pizza:allow-get-coupons",
-    "pizza:allow-create-coupon",
-    "pizza:allow-print-receipt"
+    "opener:default"
   ]
 }
