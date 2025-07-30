@@ -4,6 +4,8 @@ use std::sync::Mutex;
 use tauri::State;
 use chrono::{DateTime, Utc};
 use anyhow::Result;
+use tauri::Manager;
+
 
 // Database connection wrapper
 struct Database(Mutex<Connection>);
@@ -142,11 +144,11 @@ fn create_product(db: State<Database>, product: Product) -> Result<Product, Stri
     
     let id = conn.execute(
         "INSERT INTO products (name, description, price, image_path) VALUES (?, ?, ?, ?)",
-        [
+        rusqlite::params![
             &product.name,
             &product.description,
             &product.price.to_string(),
-            &product.image_path.as_deref().unwrap_or_default(),
+            &product.image_path,
         ],
     )
     .map_err(|e| e.to_string())?;
@@ -165,11 +167,11 @@ fn update_product(db: State<Database>, product: Product) -> Result<(), String> {
     
     conn.execute(
         "UPDATE products SET name = ?, description = ?, price = ?, image_path = ? WHERE id = ?",
-        [
+        rusqlite::params![
             &product.name,
             &product.description,
             &product.price.to_string(),
-            &product.image_path.unwrap_or_default(),
+            &product.image_path,
             &id.to_string(),
         ],
     )
@@ -230,13 +232,13 @@ fn create_order(db: State<Database>, order: Order) -> Result<Order, String> {
     
     let id = conn.execute(
         "INSERT INTO orders (created_at, buyer, products, payment_method, delivery_service, coupon_code, subtotal, tax, total) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)",
-        [
+        rusqlite::params![
             &now,
             &order.buyer,
             &products_json,
             &order.payment_method,
             &order.delivery_service,
-            &order.coupon_code.as_deref().unwrap_or_default(),
+            &order.coupon_code,
             &order.subtotal.to_string(),
             &order.tax.to_string(),
             &order.total.to_string(),
