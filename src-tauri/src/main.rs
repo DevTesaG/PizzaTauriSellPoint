@@ -12,21 +12,21 @@
 // }
 
 
-use tauri_app_lib::{Database, get_products, create_product, update_product, delete_product, get_orders, create_order, get_coupons, create_coupon, print_receipt};
+use tauri_app_lib::Database;
 
 fn main() {
     tauri::Builder::default()
       .manage(Database::new("pizza_pos.db"))
       .invoke_handler(tauri::generate_handler![
-        get_products,
-        create_product,
-        update_product,
-        delete_product,
-        get_orders,
-        create_order,
-        get_coupons,
-        create_coupon,
-        print_receipt
+        tauri_app_lib::get_products,
+        tauri_app_lib::create_product,
+        tauri_app_lib::update_product,
+        tauri_app_lib::delete_product,
+        tauri_app_lib::get_orders,
+        tauri_app_lib::create_order,
+        tauri_app_lib::get_coupons,
+        tauri_app_lib::create_coupon,
+        tauri_app_lib::print_receipt
       ])
       .run(tauri::generate_context!())
       .expect("error while running tauri app");
