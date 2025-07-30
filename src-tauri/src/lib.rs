@@ -10,6 +10,16 @@ use tauri::Manager;
 // Database connection wrapper
 pub struct Database(Mutex<Connection>);
 
+
+impl Database {
+    pub fn new(path: &str) -> rusqlite::Result<Self> {
+      let conn = init_database(path)?;
+      Ok(Database(Mutex::new(conn)))
+    }
+}
+
+
+
 // Data models
 #[derive(Debug, Serialize, Deserialize)]
 pub struct Product {
@@ -50,8 +60,8 @@ pub struct Coupon {
 }
 
 // Database initialization
-fn init_database() -> Result<Connection> {
-    let conn = Connection::open("pizza_pos.db")?;
+fn init_database(path: &str) -> Result<Connection> {
+    let conn = Connection::open(path)?;
     
     // Create tables
     conn.execute(
