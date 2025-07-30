@@ -315,8 +315,8 @@ class PizzaPOSApp {
       this.closeModal();
       this.render();
     } catch (e) {
-      this.modalError = 'Failed to save product.';
-      this.renderModal();
+      this.modalError = 'Failed to save product. : ' + e;
+      this.renderModal(); 
     }
   }
 

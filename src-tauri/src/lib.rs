@@ -95,12 +95,12 @@ fn init_database() -> Result<Connection> {
     let count: i32 = conn.query_row("SELECT COUNT(*) FROM products", [], |row| row.get(0))?;
     if count == 0 {
         let sample_products = vec![
-            ("Margherita", "Classic tomato and mozzarella", 12.99, "🍕"),
-            ("Pepperoni", "Spicy pepperoni with cheese", 14.99, "🍕"),
-            ("Hawaiian", "Ham and pineapple", 13.99, "🍕"),
-            ("Supreme", "All toppings included", 16.99, "🍕"),
-            ("BBQ Chicken", "BBQ sauce with chicken", 15.99, "🍕"),
-            ("Veggie Delight", "Fresh vegetables only", 13.99, "🍕"),
+            ("Margherita Hardcore", "Classic tomato and mozzarella", 12.99, "🍕"),
+            ("Pepperoni Remaster", "Spicy pepperoni with cheese", 14.99, "🍕"),
+            ("Hawaiian Remaster", "Ham and pineapple", 13.99, "🍕"),
+            ("Supreme Remaster", "All toppings included", 16.99, "🍕"),
+            ("BBQ Chicken Remaster", "BBQ sauce with chicken", 15.99, "🍕"),
+            ("Veggie Delight Remaster", "Fresh vegetables only", 13.99, "🍕"),
         ];
 
         for (name, description, price, image_path) in sample_products {
