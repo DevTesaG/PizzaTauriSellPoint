@@ -13,7 +13,7 @@
     "withGlobalTauri": true,
     "windows": [
       {
-        "title": "pizza_pos",
+        "title": "Pizza POS",
         "width": 800,
         "height": 600
       }
