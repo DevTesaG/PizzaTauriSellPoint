@@ -60,7 +60,7 @@ pub struct Coupon {
 }
 
 // Database initialization
-fn init_database(path: &str) -> Result<Connection> {
+fn init_database(path: &str) -> rusqlite::Result<Connection> {
     let conn = Connection::open(path)?;
     
     // Create tables
