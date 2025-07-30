@@ -86,8 +86,8 @@ class PizzaPOSApp {
         this.orders = [];
       } else {
         // Load products, orders, and coupons from backend
-        this.products = await invoke('get_products');
-        this.orders = await invoke('get_orders');
+        this.products = await invoke('plugin:pizza_pos|get_products');
+        this.orders = await invoke('plugin:pizza_pos|get_orders');
       }
     } catch (error) {
       console.error('Failed to load data:', error);
@@ -238,9 +238,9 @@ class PizzaPOSApp {
     try {
       let newOrder: Order;
       if (this.isWebMode) {
-        newOrder = await mockInvoke('create_order', { order }) as Order;
+        newOrder = await mockInvoke('plugin:pizza_pos|create_order', { order }) as Order;
       } else {
-        newOrder = await invoke('create_order', { order }) as Order;
+        newOrder = await invoke('plugin:pizza_pos|create_order', { order }) as Order;
       }
       
       this.orders.unshift(newOrder);
@@ -294,14 +294,14 @@ class PizzaPOSApp {
           const newProduct = { ...this.modalProduct, id: Math.floor(Math.random() * 10000) };
           this.products.push(newProduct);
         } else {
-          await invoke('create_product', { product: this.modalProduct });
+          await invoke('plugin:pizza_pos|create_product', { product: this.modalProduct });
         }
       } else if (this.modalMode === 'edit') {
         if (this.isWebMode) {
           const idx = this.products.findIndex(p => p.id === this.modalProduct!.id);
           if (idx !== -1) this.products[idx] = { ...this.modalProduct };
         } else {
-          await invoke('update_product', { product: this.modalProduct });
+          await invoke('plugin:pizza_pos|update_product', { product: this.modalProduct });
         }
         // Update cart items if product is in cart
         this.currentCart.forEach(item => {
@@ -326,7 +326,7 @@ class PizzaPOSApp {
       if (this.isWebMode) {
         this.products = this.products.filter(p => p.id !== productId);
       } else {
-        await invoke('delete_product', { id: productId });
+        await invoke('plugin:pizza_pos|delete_product', { id: productId });
       }
       // Remove from cart if present
       this.currentCart = this.currentCart.filter(item => item.product_id !== productId);
