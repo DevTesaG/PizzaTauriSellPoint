@@ -1,0 +1,72 @@
+{
+    "$schema": "../gen/schemas/desktop-schema.json",
+    "identifier": "pizza_pos-permissions",
+    "description": "Permissions for pizza_pos plugin",
+    "windows": ["main"],
+    "permissions": [
+      {
+        "identifier": "allow_create_product",
+        "description": "Allow create_product",
+        "commands": {
+          "allow": ["pizza_pos:create_product"]
+        }
+      },
+      {
+        "identifier": "allow_get_products",
+        "description": "Allow get_products",
+        "commands": {
+          "allow": ["pizza_pos:get_products"]
+        }
+      },
+      {
+        "identifier": "allow_update_product",
+        "description": "Allow update_product",
+        "commands": {
+          "allow": ["pizza_pos:update_product"]
+        }
+      },
+      {
+        "identifier": "allow_delete_product",
+        "description": "Allow delete_product",
+        "commands": {
+          "allow": ["pizza_pos:delete_product"]
+        }
+      },
+      {
+        "identifier": "allow_get_orders",
+        "description": "Allow get_orders",
+        "commands": {
+          "allow": ["pizza_pos:get_orders"]
+        }
+      },
+      {
+        "identifier": "allow_create_order",
+        "description": "Allow create_order",
+        "commands": {
+          "allow": ["pizza_pos:create_order"]
+        }
+      },
+      {
+        "identifier": "allow_get_coupons",
+        "description": "Allow get_coupons",
+        "commands": {
+          "allow": ["pizza_pos:get_coupons"]
+        }
+      },
+      {
+        "identifier": "allow_create_coupon",
+        "description": "Allow create_coupon",
+        "commands": {
+          "allow": ["pizza_pos:create_coupon"]
+        }
+      },
+      {
+        "identifier": "allow_print_receipt",
+        "description": "Allow print_receipt",
+        "commands": {
+          "allow": ["pizza_pos:print_receipt"]
+        }
+      }
+    ]
+  }
+  

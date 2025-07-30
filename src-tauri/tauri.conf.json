@@ -13,7 +13,7 @@
     "withGlobalTauri": true,
     "windows": [
       {
-        "title": "tauri-app",
+        "title": "pizza_pos",
         "width": 800,
         "height": 600
       }
@@ -22,22 +22,10 @@
       "csp": null
     }
   },
-
-  "plugins": {
-    "pizza_pos": {
-      "allowlist": {
-        "create_product": true,
-        "get_products": true,
-        "update_product": true,
-        "delete_product": true,
-        "get_orders": true,
-        "create_order": true,
-        "get_coupons": true,
-        "create_coupon": true,
-        "print_receipt": true
-      }
-    }
-  },
+  "capabilities": [
+    "default",
+    "pizza_pos"
+  ],
   "bundle": {
     "active": true,
     "targets": "all",
