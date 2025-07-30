@@ -25,8 +25,8 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          tagName: ${{ github.sha }}
-          releaseName: "Windows Build ${{ github.sha }}"
+          tagName: app-v__VERSION__
+          releaseName: "Windows Build app-v__VERSION__"
           releaseBody: "Windows installer built via CI"
           releaseDraft: false
           prerelease: false
