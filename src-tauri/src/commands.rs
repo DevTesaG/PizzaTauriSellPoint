@@ -1,4 +1,4 @@
-use crate::{Order, Coupon, Database};
+use tauri_app_lib::{Order, Coupon, OrderItem, Product, Database};
 use rusqlite::{Connection, Result as SqliteResult};
 use serde::{Deserialize, Serialize};
 use std::sync::Mutex;
