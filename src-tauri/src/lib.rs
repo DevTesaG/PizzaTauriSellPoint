@@ -337,23 +337,23 @@ fn print_receipt(order: Order) -> Result<(), String> {
     Ok(())
 }
 
-pub fn init<R: tauri::Runtime>() -> tauri::plugin::TauriPlugin<R> {
-    tauri::plugin::Builder::new("pizza")
-        .invoke_handler(tauri::generate_handler![
-            get_products,
-            create_product,
-            update_product,
-            delete_product,
-            get_orders,
-            create_order,
-            get_coupons,
-            create_coupon,
-            print_receipt,
-        ])
-        .setup(|app, env| {
-            let db = Database(Mutex::new(init_database()?));
-            app.manage(db);
-            Ok(())
-        })
-        .build()
-}
+// pub fn init<R: tauri::Runtime>() -> tauri::plugin::TauriPlugin<R> {
+//     tauri::plugin::Builder::new("pizza")
+//         .invoke_handler(tauri::generate_handler![
+//             get_products,
+//             create_product,
+//             update_product,
+//             delete_product,
+//             get_orders,
+//             create_order,
+//             get_coupons,
+//             create_coupon,
+//             print_receipt,
+//         ])
+//         .setup(|app, env| {
+//             let db = Database(Mutex::new(init_database()?));
+//             app.manage(db);
+//             Ok(())
+//         })
+//         .build()
+// }
