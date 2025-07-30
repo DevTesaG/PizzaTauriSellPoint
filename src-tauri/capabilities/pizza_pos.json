@@ -1,7 +1,7 @@
 {
     "$schema": "../gen/schemas/desktop-schema.json",
-    "identifier": "pizza_pos",
-    "description": "Permissions for pizza_pos plugin",
+    "identifier": "pizza-pos-permissions",
+    "description": "Permissions for pizza pos plugin",
     "windows": ["main"],
     "permissions": [
       {
@@ -68,5 +68,5 @@
         }
       }
     ]
-  }
+}
   

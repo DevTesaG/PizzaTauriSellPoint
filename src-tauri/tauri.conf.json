@@ -20,7 +20,7 @@
     ],
     "security": {
       "csp": null,
-      "capabilities": ["default", "pizza_pos"]
+      "capabilities": ["default", "pizza-pos-permissions"]
     }
   },
   "bundle": {
