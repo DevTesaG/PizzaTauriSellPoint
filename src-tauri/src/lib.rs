@@ -338,7 +338,7 @@ fn print_receipt(order: Order) -> Result<(), String> {
 }
 
 pub fn init<R: tauri::Runtime>() -> tauri::plugin::TauriPlugin<R> {
-    tauri::plugin::Builder::new("pizza_pos")
+    tauri::plugin::Builder::new("pizza")
         .invoke_handler(tauri::generate_handler![
             get_products,
             create_product,
