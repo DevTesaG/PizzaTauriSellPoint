@@ -1,0 +1,44 @@
+[[permission]]
+identifier = "allow-create-product"
+description = "Allows creating a product."
+commands.allow = ["pizza_pos:create_product"]
+
+[[permission]]
+identifier = "allow-get-products"
+description = "Allows retrieving products."
+commands.allow = ["pizza_pos:get_products"]
+
+[[permission]]
+identifier = "allow-update-product"
+description = "Allows updating a product."
+commands.allow = ["pizza_pos:update_product"]
+
+[[permission]]
+identifier = "allow-delete-product"
+description = "Allows deleting a product."
+commands.allow = ["pizza_pos:delete_product"]
+
+[[permission]]
+identifier = "allow-get-orders"
+description = "Allows retrieving orders."
+commands.allow = ["pizza_pos:get_orders"]
+
+[[permission]]
+identifier = "allow-create-order"
+description = "Allows creating an order."
+commands.allow = ["pizza_pos:create_order"]
+
+[[permission]]
+identifier = "allow-get-coupons"
+description = "Allows retrieving coupons."
+commands.allow = ["pizza_pos:get_coupons"]
+
+[[permission]]
+identifier = "allow-create-coupon"
+description = "Allows creating a coupon."
+commands.allow = ["pizza_pos:create_coupon"]
+
+[[permission]]
+identifier = "allow-print-receipt"
+description = "Allows printing a receipt."
+commands.allow = ["pizza_pos:print_receipt"]
