@@ -14,14 +14,6 @@ jobs:
           node-version: lts/*
       - name: Install Rust
         uses: dtolnay/rust-toolchain@stable
-      - name: Install WebView2 (Windows only)
-        run: |
-          $path = "$env:TEMP\\Webview2Setup.exe"
-          Invoke-WebRequest "https://go.microsoft.com/fwlink/?LinkId=2124703" -OutFile $path
-          Start-Process $path -Args "/silent /install" -Wait
-          $path = "$env:TEMP\\Webview2Setup.exe"
-          Invoke-WebRequest "https://go.microsoft.com/fwlink/?LinkId=2124703" -OutFile $path
-          Start-Process $path -Args "/silent /install" -Wait
       
       - name: Install frontend dependencies & build
         run: |

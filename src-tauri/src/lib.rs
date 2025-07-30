@@ -104,7 +104,7 @@ fn init_database() -> Result<Connection> {
         for (name, description, price, image_path) in sample_products {
             conn.execute(
                 "INSERT INTO products (name, description, price, image_path) VALUES (?, ?, ?, ?)",
-                [&name, &description, &price.to_string(), &image_path],
+                [&name, &description, &price.to_string().as_str(), &image_path],
             )?;
         }
     }
@@ -146,7 +146,7 @@ fn create_product(db: State<Database>, product: Product) -> Result<Product, Stri
             &product.name,
             &product.description,
             &product.price.to_string(),
-            &product.image_path.unwrap_or_default(),
+            &product.image_path.as_deref().unwrap_or_default(),
         ],
     )
     .map_err(|e| e.to_string())?;
@@ -236,7 +236,7 @@ fn create_order(db: State<Database>, order: Order) -> Result<Order, String> {
             &products_json,
             &order.payment_method,
             &order.delivery_service,
-            &order.coupon_code.unwrap_or_default(),
+            &order.coupon_code.as_deref().unwrap_or_default(),
             &order.subtotal.to_string(),
             &order.tax.to_string(),
             &order.total.to_string(),
@@ -348,7 +348,7 @@ pub fn init<R: tauri::Runtime>() -> tauri::plugin::TauriPlugin<R> {
             create_coupon,
             print_receipt,
         ])
-        .setup(|app| {
+        .setup(|app, env| {
             let db = Database(Mutex::new(init_database()?));
             app.manage(db);
             Ok(())
