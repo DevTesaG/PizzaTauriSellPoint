@@ -16,6 +16,10 @@ impl Database {
       let conn = init_database(path)?;
       Ok(Database(Mutex::new(conn)))
     }
+
+    pub fn get_connection(&self) -> &Mutex<Connection> {
+        &self.0
+    }
 }
 
 

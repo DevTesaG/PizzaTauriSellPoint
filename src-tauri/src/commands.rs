@@ -14,7 +14,7 @@ use tauri::Manager;
 // Tauri commands
 #[tauri::command]
 pub fn get_products(db: State<Database>) -> Result<Vec<Product>, String> {
-    let conn = db.0.lock().map_err(|e| e.to_string())?;
+    let conn = db.get_connection().lock().map_err(|e| e.to_string())?;
     
     let mut stmt = conn.prepare("SELECT id, name, description, price, image_path FROM products ORDER BY name")
         .map_err(|e| e.to_string())?;
@@ -37,7 +37,7 @@ pub fn get_products(db: State<Database>) -> Result<Vec<Product>, String> {
 
 #[tauri::command]
 pub fn create_product(db: State<Database>, product: Product) -> Result<Product, String> {
-    let conn = db.0.lock().map_err(|e| e.to_string())?;
+    let conn = db.get_connection().lock().map_err(|e| e.to_string())?;
     
     let id = conn.execute(
         "INSERT INTO products (name, description, price, image_path) VALUES (?, ?, ?, ?)",
@@ -58,7 +58,7 @@ pub fn create_product(db: State<Database>, product: Product) -> Result<Product, 
 
 #[tauri::command]
 pub fn update_product(db: State<Database>, product: Product) -> Result<(), String> {
-    let conn = db.0.lock().map_err(|e| e.to_string())?;
+    let conn = db.get_connection().lock().map_err(|e| e.to_string())?;
     
     let id = product.id.ok_or("Product ID is required")?;
     
@@ -79,7 +79,7 @@ pub fn update_product(db: State<Database>, product: Product) -> Result<(), Strin
 
 #[tauri::command]
 pub fn delete_product(db: State<Database>, id: i32) -> Result<(), String> {
-    let conn = db.0.lock().map_err(|e| e.to_string())?;
+    let conn = db.get_connection().lock().map_err(|e| e.to_string())?;
     
     conn.execute("DELETE FROM products WHERE id = ?", [id])
         .map_err(|e| e.to_string())?;
@@ -89,7 +89,7 @@ pub fn delete_product(db: State<Database>, id: i32) -> Result<(), String> {
 
 #[tauri::command]
 pub fn get_orders(db: State<Database>) -> Result<Vec<Order>, String> {
-    let conn = db.0.lock().map_err(|e| e.to_string())?;
+    let conn = db.get_connection().lock().map_err(|e| e.to_string())?;
     
     let mut stmt = conn.prepare("SELECT id, created_at, buyer, products, payment_method, delivery_service, coupon_code, subtotal, tax, total FROM orders ORDER BY created_at DESC")
         .map_err(|e| e.to_string())?;
@@ -121,7 +121,7 @@ pub fn get_orders(db: State<Database>) -> Result<Vec<Order>, String> {
 
 #[tauri::command]
 pub fn create_order(db: State<Database>, order: Order) -> Result<Order, String> {
-    let conn = db.0.lock().map_err(|e| e.to_string())?;
+    let conn = db.get_connection().lock().map_err(|e| e.to_string())?;
     
     let now = Utc::now().to_rfc3339();
     let products_json = serde_json::to_string(&order.products)
@@ -152,7 +152,7 @@ pub fn create_order(db: State<Database>, order: Order) -> Result<Order, String> 
 
 #[tauri::command]
 pub fn get_coupons(db: State<Database>) -> Result<Vec<Coupon>, String> {
-    let conn = db.0.lock().map_err(|e| e.to_string())?;
+    let conn = db.get_connection().lock().map_err(|e| e.to_string())?;
     
     let mut stmt = conn.prepare("SELECT id, code, discount_percentage, expiration_date FROM coupons ORDER BY code")
         .map_err(|e| e.to_string())?;
@@ -174,7 +174,7 @@ pub fn get_coupons(db: State<Database>) -> Result<Vec<Coupon>, String> {
 
 #[tauri::command]
 pub fn create_coupon(db: State<Database>, coupon: Coupon) -> Result<Coupon, String> {
-    let conn = db.0.lock().map_err(|e| e.to_string())?;
+    let conn = db.get_connection().lock().map_err(|e| e.to_string())?;
     
     let id = conn.execute(
         "INSERT INTO coupons (code, discount_percentage, expiration_date) VALUES (?, ?, ?)",
