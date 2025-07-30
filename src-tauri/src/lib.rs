@@ -8,7 +8,7 @@ use tauri::Manager;
 
 
 // Database connection wrapper
-struct Database(Mutex<Connection>);
+pub struct Database(Mutex<Connection>);
 
 // Data models
 #[derive(Debug, Serialize, Deserialize)]

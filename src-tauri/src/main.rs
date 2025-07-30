@@ -1,7 +1,7 @@
 // Prevents additional console window on Windows in release, DO NOT REMOVE!!
 #![cfg_attr(not(debug_assertions), windows_subsystem = "windows")]
 
-use tauri_app_lib::init;
+// use tauri_app_lib::init;
 
 // fn main() {
 //     tauri::Builder::default()
@@ -11,19 +11,23 @@ use tauri_app_lib::init;
 //         .expect("error while running tauri application");
 // }
 
+
+mod lib;
+use lib::Database;
+
 fn main() {
     tauri::Builder::default()
       .manage(Database::new("app.db"))
       .invoke_handler(tauri::generate_handler![
-         get_products,
-         create_product,
-         update_product,
-         delete_product,
-         get_orders,
-         create_order,
-         get_coupons,
-         create_coupon,
-         print_receipt
+         lib::get_products,
+         lib:create_product,
+         lib:update_product,
+         lib:delete_product,
+         lib:get_orders,
+         lib:create_order,
+         lib:get_coupons,
+         lib:create_coupon,
+         lib:print_receipt
       ])
       .run(tauri::generate_context!())
       .expect("error while running tauri app");
