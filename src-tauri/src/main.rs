@@ -13,20 +13,21 @@
 
 
 use tauri_app_lib::Database;
+mod commands;
 
 fn main() {
     tauri::Builder::default()
       .manage(Database::new("pizza_pos.db").unwrap())
       .invoke_handler(tauri::generate_handler![
-        tauri_app_lib::get_products,
-        tauri_app_lib::create_product,
-        tauri_app_lib::update_product,
-        tauri_app_lib::delete_product,
-        tauri_app_lib::get_orders,
-        tauri_app_lib::create_order,
-        tauri_app_lib::get_coupons,
-        tauri_app_lib::create_coupon,
-        tauri_app_lib::print_receipt
+        commands::get_products,
+        commands::create_product,
+        commands::update_product,
+        commands::delete_product,
+        commands::get_orders,
+        commands::create_order,
+        commands::get_coupons,
+        commands::create_coupon,
+        commands::print_receipt
       ])
       .run(tauri::generate_context!())
       .expect("error while running tauri app");
