@@ -20,7 +20,7 @@
     ],
     "security": {
       "csp": null,
-      "capabilities": ["default", "pizza"]
+      "capabilities": ["default"]
     }
   },
   "bundle": {
