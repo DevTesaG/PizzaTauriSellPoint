@@ -22,11 +22,19 @@ jobs:
           $path = "$env:TEMP\\Webview2Setup.exe"
           Invoke-WebRequest "https://go.microsoft.com/fwlink/?LinkId=2124703" -OutFile $path
           Start-Process $path -Args "/silent /install" -Wait
-      - run: npm install
-      - run: npm run build
-      - run: npm run tauri build -- --target x86_64-pc-windows-msvc
-      - uses: softprops/action-gh-release@v1
+      
+      - name: Install frontend dependencies & build
+        run: |
+          npm ci
+          npm run build
+      
+      - name: Build Tauri Windows binary and create release
+        uses: tauri-apps/tauri-action@v0
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          tag_name: release-${{ github.sha }}
-          name: Windows Build ${{ github.sha }}
-          files: src-tauri/target/release/bundle/msi/*.msi
+          tagName: ${{ github.sha }}
+          releaseName: "Windows Build ${{ github.sha }}"
+          releaseBody: "Windows installer built via CI"
+          releaseDraft: false
+          prerelease: false
