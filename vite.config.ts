@@ -1,10 +1,11 @@
 import { defineConfig } from "vite";
+import tailwind from '@tailwindcss/vite'
 
-// @ts-expect-error process is a nodejs global
-const host = process.env.TAURI_DEV_HOST;
+const host = import.meta.env.VITE_TAURI_DEV_HOST;
 
 // https://vitejs.dev/config/
 export default defineConfig(async () => ({
+  plugins: [tailwind()],
 
   // Vite options tailored for Tauri development and only applied in `tauri dev` or `tauri build`
   //
