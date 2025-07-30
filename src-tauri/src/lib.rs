@@ -126,7 +126,7 @@ fn init_database(path: &str) -> rusqlite::Result<Connection> {
 
 // Tauri commands
 #[tauri::command]
-fn get_products(db: State<Database>) -> Result<Vec<Product>, String> {
+pub(crate) fn get_products(db: State<Database>) -> Result<Vec<Product>, String> {
     let conn = db.0.lock().map_err(|e| e.to_string())?;
     
     let mut stmt = conn.prepare("SELECT id, name, description, price, image_path FROM products ORDER BY name")
@@ -149,7 +149,7 @@ fn get_products(db: State<Database>) -> Result<Vec<Product>, String> {
 }
 
 #[tauri::command]
-fn create_product(db: State<Database>, product: Product) -> Result<Product, String> {
+pub(crate) fn create_product(db: State<Database>, product: Product) -> Result<Product, String> {
     let conn = db.0.lock().map_err(|e| e.to_string())?;
     
     let id = conn.execute(
@@ -170,7 +170,7 @@ fn create_product(db: State<Database>, product: Product) -> Result<Product, Stri
 }
 
 #[tauri::command]
-fn update_product(db: State<Database>, product: Product) -> Result<(), String> {
+pub(crate) fn update_product(db: State<Database>, product: Product) -> Result<(), String> {
     let conn = db.0.lock().map_err(|e| e.to_string())?;
     
     let id = product.id.ok_or("Product ID is required")?;
@@ -191,7 +191,7 @@ fn update_product(db: State<Database>, product: Product) -> Result<(), String> {
 }
 
 #[tauri::command]
-fn delete_product(db: State<Database>, id: i32) -> Result<(), String> {
+pub(crate) fn delete_product(db: State<Database>, id: i32) -> Result<(), String> {
     let conn = db.0.lock().map_err(|e| e.to_string())?;
     
     conn.execute("DELETE FROM products WHERE id = ?", [id])
@@ -201,7 +201,7 @@ fn delete_product(db: State<Database>, id: i32) -> Result<(), String> {
 }
 
 #[tauri::command]
-fn get_orders(db: State<Database>) -> Result<Vec<Order>, String> {
+pub(crate) fn get_orders(db: State<Database>) -> Result<Vec<Order>, String> {
     let conn = db.0.lock().map_err(|e| e.to_string())?;
     
     let mut stmt = conn.prepare("SELECT id, created_at, buyer, products, payment_method, delivery_service, coupon_code, subtotal, tax, total FROM orders ORDER BY created_at DESC")
@@ -233,7 +233,7 @@ fn get_orders(db: State<Database>) -> Result<Vec<Order>, String> {
 }
 
 #[tauri::command]
-fn create_order(db: State<Database>, order: Order) -> Result<Order, String> {
+pub(crate) fn create_order(db: State<Database>, order: Order) -> Result<Order, String> {
     let conn = db.0.lock().map_err(|e| e.to_string())?;
     
     let now = Utc::now().to_rfc3339();
@@ -264,7 +264,7 @@ fn create_order(db: State<Database>, order: Order) -> Result<Order, String> {
 }
 
 #[tauri::command]
-fn get_coupons(db: State<Database>) -> Result<Vec<Coupon>, String> {
+pub(crate) fn get_coupons(db: State<Database>) -> Result<Vec<Coupon>, String> {
     let conn = db.0.lock().map_err(|e| e.to_string())?;
     
     let mut stmt = conn.prepare("SELECT id, code, discount_percentage, expiration_date FROM coupons ORDER BY code")
@@ -286,7 +286,7 @@ fn get_coupons(db: State<Database>) -> Result<Vec<Coupon>, String> {
 }
 
 #[tauri::command]
-fn create_coupon(db: State<Database>, coupon: Coupon) -> Result<Coupon, String> {
+pub(crate) fn create_coupon(db: State<Database>, coupon: Coupon) -> Result<Coupon, String> {
     let conn = db.0.lock().map_err(|e| e.to_string())?;
     
     let id = conn.execute(
@@ -306,7 +306,7 @@ fn create_coupon(db: State<Database>, coupon: Coupon) -> Result<Coupon, String> 
 }
 
 #[tauri::command]
-fn print_receipt(order: Order) -> Result<(), String> {
+pub(crate) fn print_receipt(order: Order) -> Result<(), String> {
     // Simple receipt printing simulation
     let receipt = format!(
         "🍕 PIZZA POS RECEIPT 🍕\n\

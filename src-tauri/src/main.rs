@@ -16,7 +16,7 @@ use tauri_app_lib::Database;
 
 fn main() {
     tauri::Builder::default()
-      .manage(Database::new("pizza_pos.db"))
+      .manage(Database::new("pizza_pos.db").unwrap())
       .invoke_handler(tauri::generate_handler![
         tauri_app_lib::get_products,
         tauri_app_lib::create_product,
