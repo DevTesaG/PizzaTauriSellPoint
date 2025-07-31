@@ -12,7 +12,9 @@
     "allow-create-order",
     "allow-get-coupons",
     "allow-create-coupon",
-    "allow-print-receipt"
+    "allow-print-receipt",
+    "allow-update-product",
+    "allow-delete-product"
   ]
 }
 

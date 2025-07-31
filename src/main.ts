@@ -622,6 +622,10 @@ class PizzaPOSApp {
                     <div class="text-sm text-gray-500">${order.delivery_service}</div>
                   </div>
                 </div>
+                
+                <div id="details-${order.id}" class="px-6 py-4 hidden bg-gray-50">
+                  <!-- Details will be rendered here -->
+                </div>
               </div>
             `).join('')}
           </div>
@@ -630,9 +634,70 @@ class PizzaPOSApp {
     `;
   }
 
-  showOrderDetails() {
-    // Implementation for showing order details
-    alert('Order details coming soon!');
+  renderOrderDetails(orderId:Number) {
+    const order = this.orders.find(o => o.id === orderId);
+    if (!order) return;
+
+    const itemsHtml = order.products.map(item => `
+        <li class="flex justify-between py-1">
+          <span>${item.product.name} x ${item.quantity}</span>
+          <span>$${(item.product.price * item.quantity).toFixed(2)}</span>
+        </li>
+      `).join("");
+  
+    const couponHtml = order.coupon_code
+      ? `<p>Coupon: ${order.coupon_code}</p>`
+      : "";
+  
+    const html = `
+      <div class="space-y-4">
+        ${couponHtml}
+        <ul class="border-t pt-2">${itemsHtml}</ul>
+        <div class="text-right space-y-1">
+          <p>Subtotal: $${order.subtotal.toFixed(2)}</p>
+          <p>Tax: $${order.tax.toFixed(2)}</p>
+          <p class="font-semibold">Total: $${order.total.toFixed(2)}</p>
+        </div>
+        <button
+          class="bg-green-600 text-white px-4 py-2 rounded"
+          onclick="app.printTicket(${orderId})">
+          🧾 Print Receipt
+        </button>
+      </div>`;
+
+      
+    const container = document.getElementById(`details-${order.id}`);
+    if(!container) return
+    container.innerHTML = html;
+    container.classList.remove('hidden');
+  }
+  
+
+  showOrderDetails(orderId:Number) {
+    const container = document.getElementById(`details-${orderId}`);
+    if (!container) return;
+  
+    const isExpanded = !container.classList.contains('hidden');
+    if (isExpanded) {
+      container.classList.add('hidden');
+      container.innerHTML = '';
+    } else {
+      this.renderOrderDetails(orderId);
+    }
+  }
+  
+
+  async printTicket(orderId:Number) {
+    const order = this.orders.find(o => o.id === orderId);
+    if (!order) return;
+
+    try {
+      await invoke('print_receipt', { order });
+      alert("Receipt printed to console");
+    } catch (err) {
+      console.error(err);
+      alert("Failed to print receipt");
+    }
   }
 }
 
