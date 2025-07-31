@@ -6,13 +6,13 @@
   "permissions": [
     "core:default",
     "opener:default",
-    "app:allow-get-products",
-    "app:allow-create-product",
-    "app:allow-get-orders",
-    "app:allow-create-order",
-    "app:allow-get-coupons",
-    "app:allow-create-coupon",
-    "app:allow-print-receipt"
+    "allow-get-products",
+    "allow-create-product",
+    "allow-get-orders",
+    "allow-create-order",
+    "allow-get-coupons",
+    "allow-create-coupon",
+    "allow-print-receipt"
   ]
 }
 
