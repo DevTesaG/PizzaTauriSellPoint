@@ -6,13 +6,13 @@
   "permissions": [
     "core:default",
     "opener:default",
-    "pizza:allow-get-products",
-    "pizza:allow-create-product",
-    "pizza:allow-get-orders",
-    "pizza:allow-create-order",
-    "pizza:allow-get-coupons",
-    "pizza:allow-create-coupon",
-    "pizza:allow-print-receipt"
+    "app:allow-get-products",
+    "app:allow-create-product",
+    "app:allow-get-orders",
+    "app:allow-create-order",
+    "app:allow-get-coupons",
+    "app:allow-create-coupon",
+    "app:allow-print-receipt"
   ]
 }
 
