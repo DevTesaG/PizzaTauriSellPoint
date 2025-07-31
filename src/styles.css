@@ -104,3 +104,24 @@ body {
 ::-webkit-scrollbar-thumb:hover {
   background: #e55a3f;
 }
+
+@media print {
+  /* Hide everything */
+  body * {
+    visibility: hidden;
+  }
+
+  /* Make the receipt visible and position it for printing */
+  #print-receipt,
+  #print-receipt * {
+    visibility: visible;
+  }
+
+  #print-receipt {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    padding: 10mm;
+  }
+}

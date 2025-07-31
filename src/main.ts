@@ -601,6 +601,8 @@ class PizzaPOSApp {
   renderOrdersTab() {
     return `
       <div class="space-y-6">
+        <pre id="print-receipt" style="display:none; white-space: pre;"></pre>
+
         <h2 class="text-2xl font-bold text-gray-900">Order History</h2>
         
         <div class="bg-white rounded-lg shadow overflow-hidden">
@@ -691,8 +693,41 @@ class PizzaPOSApp {
     const order = this.orders.find(o => o.id === orderId);
     if (!order) return;
 
+
+    const receiptContainer = document.getElementById("print-receipt");
+    if(!receiptContainer) return
+
+    const itemsText = order.products
+  .map(item => `${item.quantity} x ${item.product.name} - $${(item.product.price * item.quantity).toFixed(2)}`)
+  .join('\n');
+
+
+
+
+    receiptContainer.textContent = `
+    🍕 PIZZA POS RECEIPT 🍕
+    =========================
+    Order #: ${order.id}
+    Date: ${order.created_at}
+    Customer: ${order.buyer}
+    Payment: ${order.payment_method}
+    Delivery: ${order.delivery_service}
+
+    ITEMS:
+    ${itemsText}
+
+    =========================
+    Subtotal: $${order.subtotal.toFixed(2)}
+    Tax (16%): $${order.tax.toFixed(2)}
+    Total: $${order.total.toFixed(2)}
+
+    Thank you for your order!
+    =========================
+    `;
+
+  
     try {
-      await invoke('print_receipt', { order });
+      await invoke('print_receipt');
       alert("Receipt printed to console");
     } catch (err) {
       console.error(err);

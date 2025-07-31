@@ -193,43 +193,45 @@ pub fn create_coupon(db: State<Database>, coupon: Coupon) -> Result<Coupon, Stri
 }
 
 #[tauri::command]
-pub fn print_receipt(order: Order) -> Result<(), String> {
+pub fn print_receipt(window: tauri::Window) -> Result<(), String> {
     // Simple receipt printing simulation
-    let receipt = format!(
-        "🍕 PIZZA POS RECEIPT 🍕\n\
-        =========================\n\
-        Order #: {}\n\
-        Date: {}\n\
-        Customer: {}\n\
-        Payment: {}\n\
-        Delivery: {}\n\
-        \n\
-        ITEMS:\n\
-        {}\
-        \n\
-        =========================\n\
-        Subtotal: ${:.2}\n\
-        Tax (16%): ${:.2}\n\
-        Total: ${:.2}\n\
-        \n\
-        Thank you for your order!\n\
-        =========================\n",
-        order.id.unwrap_or(0),
-        order.created_at.unwrap_or_default(),
-        order.buyer,
-        order.payment_method,
-        order.delivery_service,
-        order.products.iter().map(|item| {
-            format!("{} x {} - ${:.2}\n", 
-                item.quantity, 
-                item.product.name, 
-                item.product.price * item.quantity as f64)
-        }).collect::<String>(),
-        order.subtotal,
-        order.tax,
-        order.total
-    );
+    // let receipt = format!(
+    //     "🍕 PIZZA POS RECEIPT 🍕\n\
+    //     =========================\n\
+    //     Order #: {}\n\
+    //     Date: {}\n\
+    //     Customer: {}\n\
+    //     Payment: {}\n\
+    //     Delivery: {}\n\
+    //     \n\
+    //     ITEMS:\n\
+    //     {}\
+    //     \n\
+    //     =========================\n\
+    //     Subtotal: ${:.2}\n\
+    //     Tax (16%): ${:.2}\n\
+    //     Total: ${:.2}\n\
+    //     \n\
+    //     Thank you for your order!\n\
+    //     =========================\n",
+    //     order.id.unwrap_or(0),
+    //     order.created_at.unwrap_or_default(),
+    //     order.buyer,
+    //     order.payment_method,
+    //     order.delivery_service,
+    //     order.products.iter().map(|item| {
+    //         format!("{} x {} - ${:.2}\n", 
+    //             item.quantity, 
+    //             item.product.name, 
+    //             item.product.price * item.quantity as f64)
+    //     }).collect::<String>(),
+    //     order.subtotal,
+    //     order.tax,
+    //     order.total
+    // );
 
-    println!("{}", receipt);
+    // println!("{}", receipt);
+    window.print().map_err(|e| e.to_string())?;
+
     Ok(())
 }
