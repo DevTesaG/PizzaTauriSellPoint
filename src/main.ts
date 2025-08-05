@@ -691,54 +691,48 @@ class PizzaPOSApp {
   }
   
 
-  async printTicket(orderId:Number) {
+  async printTicket(orderId: Number) {
     const order = this.orders.find(o => o.id === orderId);
     if (!order) return;
 
-
-    const receiptContainer = document.getElementById("print-receipt");
-    if(!receiptContainer) return
-
+    // Format the ticket text
     const itemsText = order.products
-  .map(item => `${item.quantity} x ${item.product.name} - $${(item.product.price * item.quantity).toFixed(2)}`)
-  .join('\n');
+      .map(item => `${item.quantity} x ${item.product.name} - $${(item.product.price * item.quantity).toFixed(2)}`)
+      .join('\n');
+      
+      const ticket = `\n🍕 PIZZA POS RECEIPT 🍕\n=========================
+      Order #: ${order.id}
+      Date: ${order.created_at}
+      Customer: ${order.buyer}
+      Payment: ${order.payment_method}
+      Delivery: ${order.delivery_service}
+      \nITEMS:\n${itemsText}\n=========================
+      Subtotal: $${order.subtotal.toFixed(2)}
+      Tax (16%): $${order.tax.toFixed(2)}
+      Total: $${order.total.toFixed(2)}\nThank you for your order!\n=========================`;
 
+      // Now the rest of the logic:
+      if (this.isWebMode) {
+        alert('Printing is only available in offline (Tauri) mode.\n\n' + ticket);
+        return;
+      }
 
-
-
-    receiptContainer.textContent = `
-    🍕 PIZZA POS RECEIPT 🍕
-    =========================
-    Order #: ${order.id}
-    Date: ${order.created_at}
-    Customer: ${order.buyer}
-    Payment: ${order.payment_method}
-    Delivery: ${order.delivery_service}
-
-    ITEMS:
-    ${itemsText}
-
-    =========================
-    Subtotal: $${order.subtotal.toFixed(2)}
-    Tax (16%): $${order.tax.toFixed(2)}
-    Total: $${order.total.toFixed(2)}
-
-    Thank you for your order!
-    =========================
-    `;
-
-  
-    try {
-      // await invoke('print_receipt');
-      await getCurrentWindow().print();
-
-      alert("Receipt printed to console");
-    } catch (err) {
-      console.error(err);
-      alert("Failed to print receipt");
-    }
+      try {
+        // Dynamically import the Tauri printer plugin
+        // @ts-ignore
+        const { print } = await import('@tauri-apps/plugin-printer');
+        await print({
+          jobName: `PizzaPOS_Order_${order.id}`,
+          data: ticket,
+          printer: undefined, // Use default printer
+          silent: false, // Show print dialog
+        });
+      } catch (e) {
+        alert('Failed to print receipt: ' + e);
+      }
   }
 }
+
 
 // Helper function for sample products
 function getSampleProducts(): Product[] {

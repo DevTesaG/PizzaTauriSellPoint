@@ -22,7 +22,7 @@ A modern, lightweight desktop Point of Sale application for pizza restaurants. B
 - **Order Details**: Click to view full order information
 - **Filtering**: Filter by payment method, date, delivery service
 
-### 🧾 Receipt Printing
+### 🧾 Receipt Printings
 - **Auto-Print**: Automatic receipt printing after order completion
 - **Detailed Receipts**: Complete order information with totals
 
